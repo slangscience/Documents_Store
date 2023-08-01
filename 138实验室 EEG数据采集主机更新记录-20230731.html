@@ -1,0 +1,154 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome file</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="实验室-eeg数据采集主机更新记录-20230731">138实验室 EEG数据采集主机更新记录-20230731</h1>
+<p>近期138实验室EEG记录主机多次无法开机，经故障排除，判断为<strong>主板损坏</strong>。新主机已于昨日(2023/07/31)采购并配置完毕，配置过程具体变更细节如下。</p>
+<h2 id="数据">数据</h2>
+<p>旧主机硬盘内储存的数据已经全部拷贝转移至新主机，具体路径为</p>
+<ul>
+<li><strong>G:/previous_data/rawdata</strong></li>
+<li><strong>G:/previous_data/rawdata2</strong></li>
+</ul>
+<p>希望同学们做好自己数据的备份</p>
+<p>新采集的数据存放路径遵循惯例，在以下路径中创建自己名字命名的文件夹</p>
+<ul>
+<li><strong>G:/recordings/YOUR_NAME</strong></li>
+</ul>
+<h2 id="主机参数">主机参数</h2>
+<p>型号：Dell 灵越3020 (Ins3020-R15N0L)</p>
+
+<table>
+<thead>
+<tr>
+<th>硬件</th>
+<th>配置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>处理器</td>
+<td>Intel i5-13400</td>
+</tr>
+<tr>
+<td>内存</td>
+<td>16G 3200MHz DDR4</td>
+</tr>
+<tr>
+<td>硬盘1</td>
+<td>512G SSD Nvme M.2</td>
+</tr>
+<tr>
+<td>硬盘2</td>
+<td>2T SSD SATA3</td>
+</tr>
+<tr>
+<td>主板</td>
+<td>B660</td>
+</tr>
+<tr>
+<td>操作系统</td>
+<td>win11</td>
+</tr>
+</tbody>
+</table><h2 id="trigger">Trigger</h2>
+<p>因pycoder重新安装及操作系统升级(win7-win11), StimTracker发送的trigger和之前不一致，具体对应关系如下</p>
+
+<table>
+<thead>
+<tr>
+<th>刺激</th>
+<th>Trigger</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mic</td>
+<td>S8</td>
+</tr>
+<tr>
+<td>Audio</td>
+<td>R6</td>
+</tr>
+<tr>
+<td>Light</td>
+<td>R8</td>
+</tr>
+<tr>
+<td>Response Pad</td>
+<td>R1</td>
+</tr>
+</tbody>
+</table><ul>
+<li>
+<p><strong>python</strong>环境，使用serial module发送mh##格式marker的对应关系</p>
+
+<table>
+<thead>
+<tr>
+<th>marker字符</th>
+<th>Trigger</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mh00</td>
+<td>R3</td>
+</tr>
+<tr>
+<td>mh10</td>
+<td>R3 + S1</td>
+</tr>
+<tr>
+<td>mh20</td>
+<td>R3 + S2</td>
+</tr>
+<tr>
+<td>mh30</td>
+<td>R3 + S3</td>
+</tr>
+<tr>
+<td>mh40</td>
+<td>R3 + S4</td>
+</tr>
+<tr>
+<td>mh50</td>
+<td>R3 + S5</td>
+</tr>
+<tr>
+<td>mh60</td>
+<td>R3 + S6</td>
+</tr>
+<tr>
+<td>mh70</td>
+<td>R3 + S7</td>
+</tr>
+<tr>
+<td>mh80</td>
+<td>R3 + S8</td>
+</tr>
+<tr>
+<td>mh90</td>
+<td>R3 + S9</td>
+</tr>
+</tbody>
+</table></li>
+<li>
+<p><strong>matlab</strong>环境，在WriteToDevice函数中，argument (‘mh%c%c’,###,0)，中间数字对应的marker可以用这个数学关系表示</p>
+<p><span class="katex--display"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>mh</mtext><mi>N</mi><mo>=</mo><msub><mi>R</mi><mrow><mi>N</mi><mo>∣</mo><mn>16</mn></mrow></msub><mo>+</mo><msub><mi>S</mi><mrow><mi>N</mi> <mo lspace="0.22em" rspace="0.22em"><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">d</mi></mrow></mo> <mn>16</mn></mrow></msub></mrow><annotation encoding="application/x-tex">
+  \text{mh}N = R_{N\mid16} + S_{N \bmod 16}
+  </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.69444em; vertical-align: 0em;"></span><span class="mord text"><span class="mord">mh</span></span><span class="mord mathnormal" style="margin-right: 0.10903em;">N</span><span class="mspace" style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right: 0.277778em;"></span></span><span class="base"><span class="strut" style="height: 1.03853em; vertical-align: -0.3552em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right: 0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.3448em;"><span class="" style="top: -2.5198em; margin-left: -0.00773em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right: 0.10903em;">N</span><span class="mrel mtight">∣</span><span class="mord mtight">16</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.3552em;"><span class=""></span></span></span></span></span></span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right: 0.222222em;"></span></span><span class="base"><span class="strut" style="height: 0.83333em; vertical-align: -0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right: 0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.336108em;"><span class="" style="top: -2.55em; margin-left: -0.05764em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right: 0.10903em;">N</span><span class="mspace mtight" style="margin-right: 0.325278em;"></span><span class="mbin mtight"><span class="mord mtight"><span class="mord mathrm mtight">mod</span></span></span><span class="mspace mtight" style="margin-right: 0.325278em;"></span><span class="mord mtight">16</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"><span class=""></span></span></span></span></span></span></span></span></span></span></span></p>
+<p>举例，发送mh199，则199整除16为12余7，则对应的trigger显示为R12+S7.</p>
+</li>
+</ul>
+</div>
+</body>
+
+</html>
